@@ -1,27 +1,28 @@
 {
-	"name"			: "eb-language-loader"
-	, "version"		: "0.1"
-	, "main"		: "src/languageLoaderService.js"
-	, "dependencies": {
-		"angular"	: ">=1.2.0"
-	}
-	, "ignore"		: [
-		"tests"
-		, "js"
-		, "bower.json"
-		, "README.md"
-		, "LICENSE"
-	]
-	, "license"		: "MIT"
-	, "authors"		: [
-		{ 
-			"name"			: "Felix Steiner"
-			, "email"		: "felix@joinbox.com"
-			, "homepage"	: "http://joinbox.com" 
-		}
-	]
-	, "repository"	: {
-		"type"		: "git"
-		, "url"		: "git://github.com/joinbox/eb-language-loader.git"
-	}
+  "name": "eb-language-loader",
+  "version": "0.1.1",
+  "main": "src/languageLoaderService.js",
+  "dependencies": {
+    "angular": ">=1.2.0"
+  },
+  "ignore": [
+    "tests",
+    "js",
+    "bower.json",
+    "README.md",
+    "LICENSE",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "license": "MIT",
+  "authors": [
+    "Felix Steiner"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joinbox/eb-language-loader.git"
+  },
+  "homepage": "https://github.com/joinbox/eb-language-loader"
 }
