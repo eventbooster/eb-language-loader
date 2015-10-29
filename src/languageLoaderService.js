@@ -8,8 +8,8 @@
 */ 
 
 angular
-.module( "eb.languageLoader", [ "eb.config" ] )
-.factory( 'LanguageLoaderService', [ "$http", "$q", "BackendBaseUrl", function ( $http, $q, BackendBaseUrl ) {
+.module( "eb.languageLoader" )
+.factory( 'LanguageLoaderService', [ "$http", "$q", function ( $http, $q ) {
 
 	// return loaderFn
 	return function ( options ) {
@@ -17,16 +17,16 @@ angular
 		var deferred = $q.defer();
 
 		if( getLocalesFromStorage() ) {
-			deferred.resolve( getLocalesFromStorage() )
+			deferred.resolve( getLocalesFromStorage() );
 		}
 		else {
 			getLocalesFromServer()
 				.then ( function( locales ) {
 					console.log( "Take locales from server: %o", locales );
-					deferred.resolve( locales )
+					deferred.resolve( locales );
 				}, function( err ) {
 					return $q.reject( err );
-				} )
+				} );
 		}
 
 		return deferred.promise;
@@ -87,9 +87,9 @@ angular
 			"filter" 	: "key=like('web.cornercard.%')"
 			, "range" 	: "0-6000"
 			, "select" 	: "key, resourceLocale.*, resourceLocale.language.*"
-		}
+		};
 
-		return $http( { method: "GET", url: BackendBaseUrl + "/resource?_noc=" + new Date().getTime(), headers: headers } )
+		return $http( { method: "GET", url: "/resource?_noc=" + new Date().getTime(), headers: headers } )
 			.then( function( response ) {
 				
 				var formattedLocales = formatLocales( response.data );
@@ -99,7 +99,7 @@ angular
 					fetchTimeStamp 		: new Date().getTime()
 					, locales 			: formattedLocales
 					, language 			: $( 'html' ).attr( 'lang' )
-				}
+				};
 				
 				console.log( 'Store %o in localStorage', toStore );
 				localStorage.setItem( 'locales', JSON.stringify( toStore ) );
