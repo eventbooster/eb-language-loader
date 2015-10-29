@@ -1,6 +1,6 @@
 {
   "name": "eb-language-loader",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "src/languageLoaderService.js",
   "dependencies": {
     "angular": ">=1.2.0"

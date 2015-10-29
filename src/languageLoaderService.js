@@ -8,7 +8,7 @@
 */ 
 
 angular
-.module( "eb.languageLoader" )
+.module( "eb.languageLoader", [] )
 .factory( 'LanguageLoaderService', [ "$http", "$q", function ( $http, $q ) {
 
 	// return loaderFn
