@@ -12,7 +12,7 @@ angular
 .factory( 'LanguageLoaderService', [ "$http", "$q", function ( $http, $q ) {
 
 	// return loaderFn
-	return function ( options ) {
+	return function () {
 
 		var deferred = $q.defer();
 
@@ -83,15 +83,9 @@ angular
 	*/
 	function getLocalesFromServer() {
 
-		var headers = {
-			"filter" 	: "key=like('web.cornercard.%')"
-			, "range" 	: "0-6000"
-			, "select" 	: "key, resourceLocale.*, resourceLocale.language.*"
-		};
-
-		return $http( { method: "GET", url: "/resource?_noc=" + new Date().getTime(), headers: headers } )
+		return $http( { method: "GET", url: "/locales.json" /*, headers: headers*/ } )
 			.then( function( response ) {
-				
+
 				var formattedLocales = formatLocales( response.data );
 
 				// Put to localStorage
@@ -125,39 +119,29 @@ angular
 
 		var trans = {};
 
-		// Loop all translation keys
-		for( var i = 0; i < serverData.length; i++ ) {
+		console.error(serverData, serverData['web.cornercard.']);
 
-			var locale = serverData[ i ]
-				, lang = $( "html" ).attr( 'lang' );
+		if (!serverData || !serverData['web.cornercard.']) return trans;
+
+		var data = serverData['web.cornercard.'];
+
+		// Loop all translation keys
+		Object.keys(data).forEach(function(localeKey) {
+
+			var lang = $( "html" ).attr( 'lang' )
+				, locale = data[localeKey];
 
 			// Get right language
-			if( !locale.resourceLocale || !locale.resourceLocale.length ) {
-				console.warn( "Proper translation missing for " + JSON.stringify( locale ) );
-				continue;
+			if( !locale[lang] ) {
+				console.warn( "Proper " + lang + " translation missing for " + JSON.stringify( locale ) );
+				return;
 			}
 
-			// Loop translations for a certain key
-			for( var j = 0; j < locale.resourceLocale.length; j++ ) {
-				var loc = locale.resourceLocale[ j ];
-				if( !loc.language || !loc.language.code ) {
-					console.error( "Missing language in localization " + JSON.stringify( locale ) );
-					continue;
-				}
+			trans[localeKey] = locale[lang];
 
-				// Correct language found
-				// break this inner loop
-				if( loc.language.code === lang ) {
-					trans[ locale.key ] = loc.value;
-					break;
-				}
+		});
 
-			}
-
-
-		}
-
-		console.log( "trans is %o", trans );
+		console.log( "LanguageLoaderService: Trans is %o", trans );
 
 		return trans;
 
