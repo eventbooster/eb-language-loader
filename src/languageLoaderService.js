@@ -119,8 +119,6 @@ angular
 
 		var trans = {};
 
-		console.error(serverData, serverData['web.cornercard.']);
-
 		if (!serverData || !serverData['web.cornercard.']) return trans;
 
 		var data = serverData['web.cornercard.'];
