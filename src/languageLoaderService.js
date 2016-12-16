@@ -131,7 +131,7 @@ angular
 
 			// Get right language
 			if( !locale[lang] ) {
-				console.warn( "Proper " + lang + " translation missing for " + JSON.stringify( locale ) );
+				console.warn( "Proper " + lang + " translation missing for " + localeKey + ":" + JSON.stringify( locale ) );
 				return;
 			}
 
